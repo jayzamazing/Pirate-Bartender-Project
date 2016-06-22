@@ -1,0 +1,19 @@
+{
+  "name": "Pirate-Bartender-Project",
+  "homepage": "https://github.com/jayzamazing/Pirate-Bartender-Project",
+  "authors": [
+    "Adrian J Lopez <adrianjaylopez@gmail.com>"
+  ],
+  "description": "The bartender will invent a new and delicious cocktail for you based upon your answers to some simple questions.",
+  "main": "index.html",
+  "keywords": [
+    "HTML",
+    "CSS",
+    "Javascript",
+    "Jquery",
+    "Bootstrap",
+    "jSON"
+  ],
+  "license": "MIT",
+  "private": true
+}
