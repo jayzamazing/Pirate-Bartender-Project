@@ -1,0 +1,35 @@
+body {
+    background-image: url("/media/pirate-bar.jpg");
+}
+.jumbotron {
+    background-color: transparent;
+}
+h2, .jumbotron {
+    color: white;
+}
+.answer-choices label {
+    margin-left: 0 !important;
+}
+label, .btn, .btn-primary {
+    background-color: #4d3319;
+    border-color: #734d26;
+}
+label:hover, .btn:hover, .btn-primary:hover {
+    background-color: #392613;
+    border-color: #4d3319;
+}
+label:active, .btn:active, .btn.active, .btn-primary.active, .btn-primary:active {
+    background-color: #392613 !important;
+    border-color: #4d3319 !important;
+    outline: none !important;
+}
+.question, .answer {
+    margin-bottom: 4rem;
+}
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+.question, .newDrink, .currentDrink {
+    text-align: center;
+}

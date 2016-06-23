@@ -7,11 +7,87 @@ $(document).ready(function() {
      * @param data - data returned from ajax called
      */
     function getDataCallback(data) {
+        //initialize bartender and pantry objects
         Jack = new Bartender(data.questions);
-        TheDrunkenPirate = new Pantry(data.ingredients);
-        //example that this is working TODO - remove later
-        console.log(Jack.getQuestion(1));
-        console.log(TheDrunkenPirate.getIngredientType('strong ingredients'));
+        TheDrunkenPirate = new Pantry(data.ingredients, data['drink adjective'], data['drink noun']);
+        //set the template to use on the web page and fill with data
+        setTemplate();
+    }
+    /*
+     * Function to set up the question template, fill it with data, and display it
+     */
+    function setTemplate() {
+        //data needed to fill template
+        var key = Object.keys(Jack.getQuestion(Jack.getQuestionNumber()));
+        var currentQuestion = Jack.getQuestion(Jack.getQuestionNumber())[key];
+        var types = TheDrunkenPirate.getIngredientType(key);
+        //template to use
+        var source = $("#question-template").html();
+        var template = Handlebars.compile(source);
+        var context = { //fields to be filled in the template
+            drink_question: currentQuestion,
+            answer1: types[0],
+            answer2: types[1],
+            answer3: types[2]
+        };
+        var html = template(context); //set the fields in the template
+        $('.question-section').html(html); //add to the html
+    }
+    /*
+     * Function to ask the bartender for another drink, deals with showing your drink
+     * and shows a button to ask for another drink
+     */
+    function setStartOver() {
+        //template to use
+        var source = $("#another-drink-template").html();
+        var template = Handlebars.compile(source);
+        //data to fill the template, uses randomnumber function to determine the drink adjective and noun
+        var drinkName = TheDrunkenPirate.getDrinkAdjective(getRandomNumber(10)).concat(' ' + TheDrunkenPirate.getDrinkNoun(getRandomNumber(10)));
+        var context = { //set the fields in the template
+            drink: drinkName
+        };
+        var html = template(context); //set the fields in the template
+        $('.question-section').html(html); //add to the html
+    }
+    /*
+     * Function that deals with asking the user drink information
+     * or asking if the user wants another drink
+     */
+    $('.question-section').on('submit', '#question-form', function(event) {
+        event.preventDefault(); //block page reload
+        if ($('input[name=options]:checked').val()) { //only fire if option is selected
+            playMusic('#music'); //play yarrrr!
+            //if the current question number is less than the total amount of questions
+            if (Jack.getQuestionNumber() < (Jack.listOfQuestions.length)) {
+                Jack.setQuestionNumber(); //increment question number
+                //if statement to stop if question number is now max
+                if (Jack.getQuestionNumber() !== (Jack.listOfQuestions.length)) {
+                    setTemplate(); //set the question template
+                } else {
+                    setStartOver(); //show drink and as if you want more to drink
+                }
+            }
+        }
+    });
+    /*
+     * Function to ask if you want another drink
+     */
+    $('.question-section').on('submit', '#another-drink-form', function(event) {
+        event.preventDefault(); //prevent page reload
+        playMusic('#music'); //play yarrrr!
+        if (Jack && TheDrunkenPirate) { //if the objects exist
+            Jack.resetQuestionNumber(); //reset question number to 0
+            setTemplate(); //show the question template
+        } else {
+            //otherwise make ajax call to fill objects
+            getQuestionsIngredients(getDataCallback);
+        }
+    });
+    /*
+     * Random number generator function
+     */
+    function getRandomNumber(number) {
+        return parseInt(Math.random() * (number));
     }
     /*
      * Questions object to store questions
@@ -36,10 +112,24 @@ $(document).ready(function() {
      */
     function Bartender(questions) {
         Questions.call(this, questions);
+        this.questionNumber = 0;
     }
     //subclass extending superclass
     Bartender.prototype = Object.create(Questions.prototype);
     Bartender.prototype.contructor = Bartender;
+    /*
+     * Getter and setter functions for question and answers
+     */
+    Bartender.prototype.getQuestionNumber = function() {
+        return this.questionNumber;
+    };
+    Bartender.prototype.setQuestionNumber = function() {
+        this.questionNumber++;
+    };
+    //Reset question number for another round
+    Bartender.prototype.resetQuestionNumber = function() {
+        this.questionNumber = 0;
+    };
     /*
      * Ingredients object to store list of ingredients
      * @param list - list of ingredients to store
@@ -61,12 +151,22 @@ $(document).ready(function() {
      * Pantry object that wraps ingredients object.
      * @param list of ingredients to initialize ingredients
      */
-    function Pantry(list) {
+    function Pantry(list, drinkAdjective, drinkNoun) {
         Ingredients.call(this, list);
+        this.drinkAdjective = drinkAdjective;
+        this.drinkNoun = drinkNoun;
     }
     //subclass extending superclass
     Pantry.prototype = Object.create(Ingredients.prototype);
     Pantry.prototype.contructor = Pantry;
+    //getter for drink adjective
+    Pantry.prototype.getDrinkAdjective = function(index) {
+        return this.drinkAdjective[index];
+    };
+    //getter for drink noun
+    Pantry.prototype.getDrinkNoun = function(index) {
+        return this.drinkNoun[index];
+    };
     /*
      * Function to get the questions and ingredients from json file
      * @param callback - function to call once done is fired off
@@ -75,7 +175,17 @@ $(document).ready(function() {
         $.get("data/questionsandingredients.json", function(data) {
             console.log("got data");
         }).done(function(data) {
-            callback(data);
+            if (typeof callback === 'function') { //check if callback is a function
+                callback(data);
+            }
         });
+    }
+    /*
+     * Function to play music
+     */
+    function playMusic(music) {
+        $(music)[0].volume = 0.5;
+        $(music)[0].load();
+        $(music)[0].play();
     }
 });
