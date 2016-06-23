@@ -50,19 +50,22 @@ $(document).ready(function() {
         $('.question-section').html(html); //add to the html
     }
     /*
-     * Function that handles getting drink information, deals with asking the user drink information
+     * Function that deals with asking the user drink information
      * or asking if the user wants another drink
      */
     $('.question-section').on('submit', '#question-form', function(event) {
         event.preventDefault(); //block page reload
-        //if the current question number is less than the total amount of questions
-        if (Jack.getQuestionNumber() < (Jack.listOfQuestions.length)) {
-            Jack.setQuestionNumber(); //increment question number
-            //if statement to stop if question number is now max
-            if (Jack.getQuestionNumber() !== (Jack.listOfQuestions.length)) {
-                setTemplate(); //set the question template
-            } else {
-                setStartOver(); //show drink and as if you want more to drink
+        if ($('input[name=options]:checked').val()) { //only fire if option is selected
+            playMusic('#music'); //play yarrrr!
+            //if the current question number is less than the total amount of questions
+            if (Jack.getQuestionNumber() < (Jack.listOfQuestions.length)) {
+                Jack.setQuestionNumber(); //increment question number
+                //if statement to stop if question number is now max
+                if (Jack.getQuestionNumber() !== (Jack.listOfQuestions.length)) {
+                    setTemplate(); //set the question template
+                } else {
+                    setStartOver(); //show drink and as if you want more to drink
+                }
             }
         }
     });
@@ -71,6 +74,7 @@ $(document).ready(function() {
      */
     $('.question-section').on('submit', '#another-drink-form', function(event) {
         event.preventDefault(); //prevent page reload
+        playMusic('#music'); //play yarrrr!
         if (Jack && TheDrunkenPirate) { //if the objects exist
             Jack.resetQuestionNumber(); //reset question number to 0
             setTemplate(); //show the question template
@@ -80,8 +84,8 @@ $(document).ready(function() {
         }
     });
     /*
-    * Random number generator function
-    */
+     * Random number generator function
+     */
     function getRandomNumber(number) {
         return parseInt(Math.random() * (number));
     }
@@ -175,5 +179,13 @@ $(document).ready(function() {
                 callback(data);
             }
         });
+    }
+    /*
+     * Function to play music
+     */
+    function playMusic(music) {
+        $(music)[0].volume = 0.5;
+        $(music)[0].load();
+        $(music)[0].play();
     }
 });
