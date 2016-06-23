@@ -16,11 +16,12 @@
     </header>
     <section class="question-section container">
     </section>
+    <!-- Putting these audio and script tags before the body closing tag might perceptively speed up the loading time of the page -->
     <audio id="music" src="/media/yarrrr.wav"></audio>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/handlebars/handlebars.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/app.js"></script> <!-- for some weird reason, the page doesn't load on my browser -->
     <script id="question-template" type="text/x-handlebars-template">
         <form id="question-form">
             <div class="row">
