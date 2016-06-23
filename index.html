@@ -1,14 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Pirate Bartender Project</title>
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-</head>
-<body>
 
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="js/app.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Pirate Bartender Project</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+    <header class="container-fluid">
+        <div class="jumbotron">
+            <h1>Pirate Bartender Project</h1>
+        </div>
+    </header>
+    <section class="question-section container">
+    </section>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
+    <script src="js/app.js"></script>
+    <script id="question-template" type="text/x-handlebars-template">
+        <form action="" id="question-form">
+            <div class="row">
+                <div class="question col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                    <h2>{{drink_question}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="answer col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                    <div class="row">
+                        <div class="btn-toolbar col-centered answer-choices col-xs-12 col-sm-12" data-toggle="buttons">
+                            <label class="btn btn-primary col-xs-12 col-sm-12 col-md-4 col-lg-4" id="radio1">
+                                <input type="radio" name="options" autocomplete="off" value="1">
+                                <h4>{{answer1}}</h4>
+                            </label>
+                            <label class="btn btn-primary col-xs-12 col-sm-12 col-md-4 col-lg-4" id="radio2">
+                                <input type="radio" name="options" autocomplete="off" value="2">
+                                <h4>{{answer2}}</h4>
+                            </label>
+                            <label class="btn btn-primary col-xs-12 col-sm-12 col-md-4 col-lg-4" id="radio3">
+                                <input type="radio" name="options" autocomplete="off" value="3">
+                                <h4>{{answer3}}</h4>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                    <div class="col-centered answer-submit col-lg-2">
+                        <input type="submit" name="submit" class="btn btn-default btn-primary col-lg-12" value="Submit">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+    <script id="another-drink-template" type="text/x-handlebars-template">
+        <form action="" id="another-drink-form">
+            <div class="row">
+                <div class="newDrink col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                    <h2>Would ye be wanting another drink?</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                    <div class="col-centered new-drink-submit col-lg-2">
+                        <input type="submit" name="submit" class="btn btn-default btn-primary col-lg-12" value="YARRR!">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
 </body>
+
 </html>

@@ -15,5 +15,8 @@
     "jSON"
   ],
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "handlebars": "^4.0.5"
+  }
 }

@@ -9,10 +9,41 @@ $(document).ready(function() {
     function getDataCallback(data) {
         Jack = new Bartender(data.questions);
         TheDrunkenPirate = new Pantry(data.ingredients);
-        //example that this is working TODO - remove later
-        console.log(Jack.getQuestion(1));
-        console.log(TheDrunkenPirate.getIngredientType('strong ingredients'));
+        setTemplate();
     }
+    /*
+     *
+     */
+    function setTemplate() {
+        var key = Object.keys(Jack.getQuestion(Jack.getQuestionNumber()));
+        var currentQuestion = Jack.getQuestion(Jack.getQuestionNumber())[key];
+        var types = TheDrunkenPirate.getIngredientType(key);
+        var source = $("#question-template").html();
+        var template = Handlebars.compile(source);
+        var context = {
+            drink_question: currentQuestion,
+            answer1: types[0],
+            answer2: types[1],
+            answer3: types[2]
+        };
+        var html = template(context);
+        $('.question-section').html(html);
+    }
+    /*
+     * Function to handle submit form
+     */
+    $('.question-section').on('submit', '#question-form', function(event) {
+        event.preventDefault();
+        if (Jack.getQuestionNumber() < (Jack.listOfQuestions.length)) {
+            var genreChecked = $('.answer-choices input:checked').val();
+            Jack.setQuestionNumber();
+            if (Jack.getQuestionNumber() !== (Jack.listOfQuestions.length)) {
+                setTemplate();
+            } else {
+
+            }
+        }
+    });
     /*
      * Questions object to store questions
      * @param questions - list of questions
@@ -36,10 +67,20 @@ $(document).ready(function() {
      */
     function Bartender(questions) {
         Questions.call(this, questions);
+        this.questionNumber = 0;
     }
     //subclass extending superclass
     Bartender.prototype = Object.create(Questions.prototype);
     Bartender.prototype.contructor = Bartender;
+    /*
+     * Getter and setter functions for question and answers
+     */
+    Bartender.prototype.getQuestionNumber = function() {
+        return this.questionNumber;
+    };
+    Bartender.prototype.setQuestionNumber = function() {
+        this.questionNumber++;
+    };
     /*
      * Ingredients object to store list of ingredients
      * @param list - list of ingredients to store
@@ -63,10 +104,20 @@ $(document).ready(function() {
      */
     function Pantry(list) {
         Ingredients.call(this, list);
+        this.ingredientListNumber = 0;
     }
     //subclass extending superclass
     Pantry.prototype = Object.create(Ingredients.prototype);
     Pantry.prototype.contructor = Pantry;
+    /*
+     * Getter and setter functions for ingredient number
+     */
+    Pantry.prototype.getIngredientListNumber = function() {
+        return this.ingredientListNumber;
+    };
+    Pantry.prototype.setIngredientListNumber = function() {
+        this.ingredientListNumber++;
+    };
     /*
      * Function to get the questions and ingredients from json file
      * @param callback - function to call once done is fired off
@@ -75,7 +126,9 @@ $(document).ready(function() {
         $.get("data/questionsandingredients.json", function(data) {
             console.log("got data");
         }).done(function(data) {
-            callback(data);
+            if (typeof callback === 'function') { //check if callback is a function
+                callback(data);
+            }
         });
     }
 });

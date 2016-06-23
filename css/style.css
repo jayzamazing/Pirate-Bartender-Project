@@ -1,0 +1,13 @@
+.answer-choices label {
+    margin-left: 0 !important;
+}
+.question, .answer {
+    margin-bottom: 4rem;
+}
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+.question, .newDrink {
+  text-align: center;
+}

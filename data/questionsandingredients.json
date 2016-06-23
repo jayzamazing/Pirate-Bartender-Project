@@ -1,10 +1,20 @@
 {
     "questions": [
-        "Do ye like yer drinks strong?",
-        "Do ye like it with a salty tang?",
-        "Are ye a lubber who likes it bitter?",
-        "Would ye like a bit of sweetness with yer poison?",
-        "Are ye one for a fruity finish?"
+      {
+        "strong ingredients": "Do ye like yer drinks strong?"
+      },
+      {
+        "salty ingredients": "Do ye like it with a salty tang?"
+      },
+      {
+        "bitter ingredients": "Are ye a lubber who likes it bitter?"
+      },
+      {
+        "sweet ingredients": "Would ye like a bit of sweetness with yer poison?"
+      },
+      {
+        "fruity ingredients": "Are ye one for a fruity finish?"
+      }
     ],
     "ingredients": {
         "strong ingredients": [
@@ -32,5 +42,29 @@
             "dash of cassis",
             "cherry on top"
         ]
-    }
+    },
+    "drink adjective": [
+      "Salty",
+      "Hot",
+      "Bitter",
+      "Bloody",
+      "Fuzzy",
+      "Rob",
+      "Vodka",
+      "Sea",
+      "Tequilla",
+      "Blue"
+    ],
+    "drink noun": [
+      "Sea-Dog",
+      "Rum",
+      "Chichilla",
+      "Cocktail",
+      "Navel",
+      "Roy",
+      "Martini",
+      "Breeze",
+      "Sunrise",
+      "Hawaii"
+    ]
 }
