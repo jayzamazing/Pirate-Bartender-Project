@@ -1,5 +1,5 @@
 body {
-    background-image: url("/media/pirate-bar.jpg");
+    background-image: url("../media/pirate-bar.jpg");
 }
 .jumbotron {
     background-color: transparent;
