@@ -1,35 +1,69 @@
+/* Style sheet for index.html */
+
+
+/* add background image to page */
+
 body {
     background-image: url("../media/pirate-bar.jpg");
 }
+
+/* Make jumbotron transparent so only title shows */
+
 .jumbotron {
     background-color: transparent;
 }
+
+/* make text white */
+
 h2, .jumbotron {
     color: white;
 }
+
+/* override bootstrap so buttons are right next to each other */
+
 .answer-choices label {
     margin-left: 0 !important;
 }
+
+/* set background and border color for buttons and label buttons */
+
 label, .btn, .btn-primary {
     background-color: #4d3319;
     border-color: #734d26;
 }
+
+/* set background and border color for buttons and label buttons hover event*/
+
 label:hover, .btn:hover, .btn-primary:hover {
     background-color: #392613;
     border-color: #4d3319;
 }
+
+/* set background and border color for buttons and label buttons for active event
+ * override bootstrap as styles were being ignored
+ */
+
 label:active, .btn:active, .btn.active, .btn-primary.active, .btn-primary:active {
     background-color: #392613 !important;
     border-color: #4d3319 !important;
     outline: none !important;
 }
+
+/* add margin to these two classes */
+
 .question, .answer {
     margin-bottom: 4rem;
 }
+
+/* center class on screen */
+
 .col-centered {
     float: none;
     margin: 0 auto;
 }
+
+/* align text center for following classes */
+
 .question, .newDrink, .currentDrink {
     text-align: center;
 }

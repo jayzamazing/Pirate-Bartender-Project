@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var Jack, TheDrunkenPirate; //variable declarations
+    //variable declarations
+    var Jack, TheDrunkenPirate;
     //get data from json file and pass callback
     getQuestionsIngredients(getDataCallback);
     /*
@@ -24,14 +25,17 @@ $(document).ready(function() {
         //template to use
         var source = $("#question-template").html();
         var template = Handlebars.compile(source);
-        var context = { //fields to be filled in the template
+        //fields to be filled in the template
+        var context = {
             drink_question: currentQuestion,
             answer1: types[0],
             answer2: types[1],
             answer3: types[2]
         };
-        var html = template(context); //set the fields in the template
-        $('.question-section').html(html); //add to the html
+        //set the fields in the template
+        var html = template(context);
+        //add to the html
+        $('.question-section').html(html);
     }
     /*
      * Function to ask the bartender for another drink, deals with showing your drink
@@ -43,28 +47,37 @@ $(document).ready(function() {
         var template = Handlebars.compile(source);
         //data to fill the template, uses randomnumber function to determine the drink adjective and noun
         var drinkName = TheDrunkenPirate.getDrinkAdjective(getRandomNumber(10)).concat(' ' + TheDrunkenPirate.getDrinkNoun(getRandomNumber(10)));
-        var context = { //set the fields in the template
+        //set the fields in the template
+        var context = {
             drink: drinkName
         };
-        var html = template(context); //set the fields in the template
-        $('.question-section').html(html); //add to the html
+        //set the fields in the template
+        var html = template(context);
+        //add to the html
+        $('.question-section').html(html);
     }
     /*
      * Function that deals with asking the user drink information
      * or asking if the user wants another drink
      */
     $('.question-section').on('submit', '#question-form', function(event) {
-        event.preventDefault(); //block page reload
-        if ($('input[name=options]:checked').val()) { //only fire if option is selected
-            playMusic('#music'); //play yarrrr!
+        //block page reload
+        event.preventDefault();
+        //only fire if option is selected
+        if ($('input[name=options]:checked').val()) {
+            //play yarrrr!
+            playMusic('#music');
             //if the current question number is less than the total amount of questions
             if (Jack.getQuestionNumber() < (Jack.listOfQuestions.length)) {
-                Jack.setQuestionNumber(); //increment question number
+                //increment question number
+                Jack.setQuestionNumber();
                 //if statement to stop if question number is now max
                 if (Jack.getQuestionNumber() !== (Jack.listOfQuestions.length)) {
-                    setTemplate(); //set the question template
+                    //set the question template
+                    setTemplate();
                 } else {
-                    setStartOver(); //show drink and as if you want more to drink
+                    //show drink and as if you want more to drink
+                    setStartOver();
                 }
             }
         }
@@ -73,11 +86,16 @@ $(document).ready(function() {
      * Function to ask if you want another drink
      */
     $('.question-section').on('submit', '#another-drink-form', function(event) {
-        event.preventDefault(); //prevent page reload
-        playMusic('#music'); //play yarrrr!
-        if (Jack && TheDrunkenPirate) { //if the objects exist
-            Jack.resetQuestionNumber(); //reset question number to 0
-            setTemplate(); //show the question template
+        //prevent page reload
+        event.preventDefault();
+        //play yarrrr!
+        playMusic('#music');
+        //if the objects exist
+        if (Jack && TheDrunkenPirate) {
+            //reset question number to 0
+            Jack.resetQuestionNumber();
+            //show the question template
+            setTemplate();
         } else {
             //otherwise make ajax call to fill objects
             getQuestionsIngredients(getDataCallback);
