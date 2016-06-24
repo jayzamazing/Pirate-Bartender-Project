@@ -31,6 +31,7 @@ $(document).ready(function() {
             answer3: types[2]
         };
         var html = template(context); //set the fields in the template
+        //keep quotes consistent throughout//
         $('.question-section').html(html); //add to the html
     }
     /*
